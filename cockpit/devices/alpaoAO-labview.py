@@ -207,7 +207,6 @@ class AlpaoLabview(device.Device):
                     #    message=message+'\n'
                     #print message
                     self.clientsocket.send(data)
-                    self.clientsocket.send('\r\n')
                     self.sendImage=False
                     end=time.clock()-t
                     print "time=",end
