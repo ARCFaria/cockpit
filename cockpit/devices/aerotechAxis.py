@@ -156,7 +156,7 @@ class AerotechZStage(device.Device):
                 'getMovementTime': self.getMovementTime,
                 'cleanupAfterExperiment': self.cleanup,
                 'setSafety': self.setSafety},
-                axis, [10, 50, 100, 500, 1000, 5000],
+                axis, [10,10,10,10,10,10,10, 50, 100, 500, 1000, 5000],
                 1, (minVal, maxVal), (minVal, maxVal))
         result.append(handler)
         return result
