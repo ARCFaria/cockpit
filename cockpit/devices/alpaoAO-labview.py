@@ -60,14 +60,14 @@ class AlpaoLabview(device.Device):
         while 1:
             (self.clientsocket, address)=self.socket.accept()
             if self.clientsocket:
-                print "socket connected", address
+                print ("socket connected", address)
                 noerror=True
                 while noerror:
                     try:
                         input=self.clientsocket.recv(100)
                     except socket.error,e:
                         noerror=False
-                        print 'Labview socket disconnected'
+                        print ('Labview socket disconnected')
                         break
                     
                     if(input[:4]=='getZ'):
@@ -98,20 +98,20 @@ class AlpaoLabview(device.Device):
                             self.clientsocket.send(reply)
                     except socket.error,e:
                         noerror=False
-                        print 'Labview socket disconnected'
+                        print ('Labview socket disconnected')
                         break
                     if self.awaitimage:
                         if (self.slmdev is None):
                             self.slmdev=depot.getDeviceWithName('slm')
                             self.slmsize=self.slmdev.connection.get_shape()
-                            print self.slmsize
-                            print self.wavelength
+                            print (self.slmsize)
+                            print (self.wavelength)
                         #self.slmImage=N.zero((512,512),dtype=uint16)
                         try:
                             data=self.clientsocket.recv(512*512*2)
-                            print len(data)
+                            print (len(data))
                             tdata=struct.unpack('H'*(512*512),data)
-                            print tdata[:10]
+                            print (tdata[:10])
                             #self.slmImage=N.frombuffer(
                              #   buffer(self.clientsocket.recv(512*512*2)),
                               #  dtype='uint16',count=512*512)
@@ -122,7 +122,7 @@ class AlpaoLabview(device.Device):
                             
                         except socket.error,e:
                             noerror=False
-                            print 'Labview socket disconnected'
+                            print ('Labview socket disconnected')
                             break
  
 
@@ -137,10 +137,10 @@ class AlpaoLabview(device.Device):
             i=i+1        
             input=self.recv_end(self.socket)
             
-            print input
+            print (input)
 
             output=self.socket.send('hello'+str(i)+'\r\n')
-            print "sent bytes",output 
+            print ("sent bytes", output)
             time.sleep(1)
             
 
@@ -150,7 +150,7 @@ class AlpaoLabview(device.Device):
         total_data=[];data=''
         while True:
             data=the_socket.recv(100)
-            print data
+            print (data)
             if End in data:
                 total_data.append(data[:data.find(End)])
                 break
@@ -194,13 +194,13 @@ class AlpaoLabview(device.Device):
         ## Receive a new image and send it to our canvas.
  
     def onImage(self, data, *args):
-        print "got Image"
+        print ("got Image")
         if(self.sendImage):
             if(self.clientsocket):
                 try:
                     message=''
                     t=time.clock()
-                    print data.shape
+                    print (data.shape)
                     #for i in range(data.shape[0]):
                     #    for j in range(data.shape[1]):
                     #        message=message+str(data[i,j])+'\t'
@@ -209,10 +209,10 @@ class AlpaoLabview(device.Device):
                     self.clientsocket.send(data)
                     self.sendImage=False
                     end=time.clock()-t
-                    print "time=",end
+                    print ("time=",end)
                 except socket.error,e:
                     noerror=False
-                    print 'Labview socket disconnected'
+                    print ('Labview socket disconnected')
         
         
 ## This debugging window lets each digital lineout of the DSP be manipulated
