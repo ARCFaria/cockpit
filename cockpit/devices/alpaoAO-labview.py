@@ -65,7 +65,7 @@ class AlpaoLabview(device.Device):
                 while noerror:
                     try:
                         input=self.clientsocket.recv(100)
-                    except socket.error,e:
+                    except socket.error as e:
                         noerror=False
                         print ('Labview socket disconnected')
                         break
@@ -96,7 +96,7 @@ class AlpaoLabview(device.Device):
                     try:
                         if (reply is not None):
                             self.clientsocket.send(reply)
-                    except socket.error,e:
+                    except socket.error as e:
                         noerror=False
                         print ('Labview socket disconnected')
                         break
@@ -120,7 +120,7 @@ class AlpaoLabview(device.Device):
                                 self.wavelength,
                                 [tdata,tdata])
                             
-                        except socket.error,e:
+                        except socket.error as e:
                             noerror=False
                             print ('Labview socket disconnected')
                             break
@@ -210,7 +210,7 @@ class AlpaoLabview(device.Device):
                     self.sendImage=False
                     end=time.clock()-t
                     print ("time=",end)
-                except socket.error,e:
+                except socket.error as e:
                     noerror=False
                     print ('Labview socket disconnected')
         
